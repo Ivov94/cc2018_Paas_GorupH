@@ -1,4 +1,4 @@
-##cc2018_Paas_GorupH
+# cc2018_Paas_GorupH
 
 Maven (3+) and Java 1.8. have to be installed for this application.
 
