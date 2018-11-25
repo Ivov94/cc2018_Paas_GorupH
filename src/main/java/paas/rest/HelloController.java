@@ -14,11 +14,16 @@ public class HelloController {
 	private DataHolder dataHolder;
 	
 	public HelloController() {
-		
 	}
 
 	@RequestMapping("/hello")
     public String index() {
-        return "Greetings from Spring Boot! " + dataHolder.getFile().getContentType() + "\n" + Arrays.toString(dataHolder.getData());
+		String prefix = "No File uploaded yet.";
+		
+		if (dataHolder.getFile() != null) {
+			prefix = dataHolder.getFile().getOriginalFilename() + " " +dataHolder.getFile().getContentType();
+		}
+		
+        return prefix + "\n" + Arrays.toString(dataHolder.getData());
     }
 }
