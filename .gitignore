@@ -1,5 +1,5 @@
-.classpath
-.project
-.settings/
+Backend/.classpath
+Backend/.project
+Backend/.settings/
 
-target/
+Backend/target/
