@@ -10,12 +10,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import paas.rest.model.DataHolder;
+import paas.rest.model.filter.negative.NegativeImageFilter;
 
 @RestController
 public class FileUploadController {
 	
 	@Autowired
 	private DataHolder dataHolder;
+	
+	@Autowired
+	private NegativeImageFilter negativeImageFilter;
 	
 	public FileUploadController() {
 	}
@@ -30,6 +34,13 @@ public class FileUploadController {
 			e.printStackTrace();
 		}
 		System.out.println("hi");
+		
+		try {
+			negativeImageFilter.createAndStoreFilteredImage(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
         return "redirect:/";
     }
 }
