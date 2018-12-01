@@ -1,6 +1,7 @@
 package paas.rest;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import paas.rest.model.DataHolder;
-import paas.rest.model.filter.negative.NegativeImageFilter;
+import paas.rest.model.filter.ImageFilter;
 
 @RestController
 public class FileUploadController {
@@ -19,7 +20,7 @@ public class FileUploadController {
 	private DataHolder dataHolder;
 	
 	@Autowired
-	private NegativeImageFilter negativeImageFilter;
+	private List<ImageFilter> imageFilters;
 	
 	public FileUploadController() {
 	}
@@ -35,11 +36,15 @@ public class FileUploadController {
 		}
 		System.out.println("hi");
 		
-		try {
-			negativeImageFilter.createAndStoreFilteredImage(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		imageFilters.forEach(filter -> {
+			try {
+				filter.createAndStoreFilteredImage(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 		
         return "redirect:/";
     }

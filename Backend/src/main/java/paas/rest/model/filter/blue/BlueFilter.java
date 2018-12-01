@@ -1,4 +1,4 @@
-package paas.rest.model.filter.negative;
+package paas.rest.model.filter.blue;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -16,42 +16,42 @@ import org.springframework.web.multipart.MultipartFile;
 import paas.rest.model.filter.ImageFilter;
 
 /**
- * This image filter is used to create a negative image.
+ * This image filter is used to create a monochrome grey scale image of the colour blue.
  */
 @Component
-public class NegativeImageFilter implements ImageFilter {
+public class BlueFilter implements ImageFilter {
 
-	public NegativeImageFilter() {
+	public BlueFilter() {
 	}
 	
 	@Override
 	public void createAndStoreFilteredImage(final MultipartFile file) throws IOException {
-		File convFile = new File("negative_" + file.getOriginalFilename());
+		File convFile = new File("blue_" + file.getOriginalFilename());
 	    convFile.createNewFile(); 
 	    FileOutputStream fos = new FileOutputStream(convFile);
 	    
-	    fos.write(createNegativeImage(file.getBytes()));
+	    fos.write(createBlueImage(file.getBytes()));
 	    fos.close();
 	}
 	
-	private byte[] createNegativeImage(byte[] bytes) throws IOException {
+	private byte[] createBlueImage(byte[] bytes) throws IOException {
 		BufferedImage image = createBufferedImage(bytes);
-
+		BufferedImage filteredImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				Color pixelColour = new Color(image.getRGB(i, j));
-				image.setRGB(
+				int blueValue = new Color(image.getRGB(i, j)).getBlue();
+				filteredImage.setRGB(
 						i,
 						j,
 						new Color(
-								255 - pixelColour.getRed(),
-								255 - pixelColour.getGreen(),
-								255 - pixelColour.getBlue()
-								).getRGB());
+								blueValue,
+								blueValue,
+								blueValue
+						).getRGB());
 			}
 		}
 		
-		return convertBufferedImageToByteArray(image);
+		return convertBufferedImageToByteArray(filteredImage);
 	}
 	
 	private byte[] convertBufferedImageToByteArray(final BufferedImage image) throws IOException {
@@ -70,5 +70,4 @@ public class NegativeImageFilter implements ImageFilter {
 		bis.close();
 		return bufferedImage;
 	}
-
 }
