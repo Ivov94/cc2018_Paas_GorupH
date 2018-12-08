@@ -1,0 +1,8 @@
+Backend/.classpath
+Backend/.project
+Backend/.settings/
+
+Backend/target/
+Frontend/.vs
+Frontend/Paas.GroupH/bin
+Frontend/Paas.GroupH/obj

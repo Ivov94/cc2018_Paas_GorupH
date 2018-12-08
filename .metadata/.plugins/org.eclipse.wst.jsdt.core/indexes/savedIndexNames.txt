@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+E:\Kaya\Medieninformatik\WS2018\Cloud Computing\Proje3\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+469275323.index
+3625879401.index
+1509419771.index
+3130988147.index
+1854767703.index
