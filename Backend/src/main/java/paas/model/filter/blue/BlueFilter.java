@@ -62,9 +62,4 @@ public class BlueFilter implements ImageFilter {
 		bis.close();
 		return bufferedImage;
 	}
-
-	@Override
-	public String getKey() {
-		return "blue_";
-	}
 }

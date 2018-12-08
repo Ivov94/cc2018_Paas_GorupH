@@ -44,6 +44,9 @@ public class FileUploadController {
 		List<Task> tasks = imageFilters.stream().map(filter -> Task.createImageFilterTask(filter, file)).collect(Collectors.toList());
 		tasks.forEach(Task::start);
 		
+		//TODO make a smarter check in order to not fail when timeout, but to restart tasks where the result is missing. -> fault tolerance
+		//TODO make a smarter max poll, since bigger images need more time. O(n) where n = pixels -> scalability
+		//TODO publish an indication of the progress -> progressbar.
 		await().atMost(MAX_POLL).pollInterval(POLL_INTERVAL).until(() -> tasks.stream().allMatch(Task::isFinished), equalTo(true));
 		
 		byte[] joinedImage;

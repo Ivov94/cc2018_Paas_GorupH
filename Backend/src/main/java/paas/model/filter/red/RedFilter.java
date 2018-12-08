@@ -62,10 +62,4 @@ public class RedFilter implements ImageFilter {
 		bis.close();
 		return bufferedImage;
 	}
-
-	@Override
-	public String getKey() {
-		return "red_";
-	}
-
 }

@@ -63,10 +63,4 @@ public class NegativeImageFilter implements ImageFilter {
 		bis.close();
 		return bufferedImage;
 	}
-
-	@Override
-	public String getKey() {
-		return "negative_";
-	}
-
 }

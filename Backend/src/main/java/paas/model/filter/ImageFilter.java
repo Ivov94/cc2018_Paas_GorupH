@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface ImageFilter {
 	
+	//TODO for all filters: make parallelization by subdividing the image -> performance + fault tolerance + intraprocess parallelization
 	/**
 	 * Create a filtered version of the image.
 	 *
@@ -18,6 +19,4 @@ public interface ImageFilter {
 	 * @throws IOException This exception is thrown when the image can not be written.
 	 */
 	byte[] createFilteredImage(MultipartFile file) throws IOException;
-	
-	String getKey();
 }

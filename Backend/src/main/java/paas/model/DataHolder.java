@@ -1,31 +1,24 @@
 package paas.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class DataHolder {
 	
-	private byte[] data;
-	private MultipartFile file;
+	private Map<String, byte[]> storedImages;
 	
 	public DataHolder() {
-		data = new byte[0];
+		storedImages = new HashMap<>();
 	}
 
-	public byte[] getData() {
-		return data;
+	public byte[] getImage(final String key) {
+		return storedImages.get(key);
 	}
 
-	public void setData(byte[] data) {
-		this.data = data;
-	}
-
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
+	public void putImage(final String key, final byte[] data) {
+		storedImages.put(key, data);
 	}
 }

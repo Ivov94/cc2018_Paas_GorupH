@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import paas.model.DataHolder;
+import paas.model.api.DataRetrieverService;
 
 @RestController
 public class ImageRetrievalController {
 
 	@Autowired
-	private DataHolder dataHolder;
+	private DataRetrieverService dataRetrieverService;
 	
 	public ImageRetrievalController() {
 	}
@@ -24,6 +24,6 @@ public class ImageRetrievalController {
     public ResponseEntity<byte[]> getImage(@PathVariable String imageId) {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-	    return new ResponseEntity<>(dataHolder.getData(), headers, HttpStatus.OK);
+	    return new ResponseEntity<>(dataRetrieverService.retrieveImage(imageId), headers, HttpStatus.OK);
     }
 }
