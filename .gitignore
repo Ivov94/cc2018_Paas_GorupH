@@ -3,6 +3,9 @@ Backend/.project
 Backend/.settings/
 
 Backend/target/
+<<<<<<< HEAD
 Frontend/.vs
 Frontend/Paas.GroupH/bin
 Frontend/Paas.GroupH/obj
+=======
+>>>>>>> 7e31d839b1268a296d4499263ff7314a2a009a38
