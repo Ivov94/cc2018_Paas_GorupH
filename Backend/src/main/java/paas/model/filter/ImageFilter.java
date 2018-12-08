@@ -1,4 +1,4 @@
-package paas.rest.model.filter;
+package paas.model.filter;
 
 import java.io.IOException;
 
@@ -11,11 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ImageFilter {
 	
 	/**
-	 * Create and store a filtered version of the image.
+	 * Create a filtered version of the image.
 	 *
 	 * @param file the image to be filtered as a file.
+	 * @return the filtered image as a byte array.
 	 * @throws IOException This exception is thrown when the image can not be written.
 	 */
-	void createAndStoreFilteredImage(MultipartFile file) throws IOException;
-
+	byte[] createFilteredImage(MultipartFile file) throws IOException;
+	
+	String getKey();
 }

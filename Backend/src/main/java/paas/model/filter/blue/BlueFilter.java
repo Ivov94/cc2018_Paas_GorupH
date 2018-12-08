@@ -1,11 +1,9 @@
-package paas.rest.model.filter.green;
+package paas.model.filter.blue;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -13,45 +11,39 @@ import javax.imageio.ImageIO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import paas.rest.model.filter.ImageFilter;
+import paas.model.filter.ImageFilter;
 
 /**
- * This image filter is used to create a monochrome grey scale image of the colour green.
+ * This image filter is used to create a monochrome grey scale image of the colour blue.
  */
 @Component
-public class GreenFilter implements ImageFilter {
+public class BlueFilter implements ImageFilter {
 
-	public GreenFilter() {
+	public BlueFilter() {
 	}
 	
 	@Override
-	public void createAndStoreFilteredImage(final MultipartFile file) throws IOException {
-		File convFile = new File("green_" + file.getOriginalFilename());
-	    convFile.createNewFile(); 
-	    FileOutputStream fos = new FileOutputStream(convFile);
-	    
-	    fos.write(createGreenImage(file.getBytes()));
-	    fos.close();
+	public byte[] createFilteredImage(final MultipartFile file) throws IOException {
+		return createBlueImage(file.getBytes());
 	}
 	
-	private byte[] createGreenImage(byte[] bytes) throws IOException {
+	private byte[] createBlueImage(byte[] bytes) throws IOException {
 		BufferedImage image = createBufferedImage(bytes);
-		BufferedImage filteredImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				int greenValue = new Color(image.getRGB(i, j)).getGreen();
-				filteredImage.setRGB(
+				int blueValue = new Color(image.getRGB(i, j)).getBlue();
+				image.setRGB(
 						i,
 						j,
 						new Color(
-								greenValue,
-								greenValue,
-								greenValue
+								blueValue,
+								blueValue,
+								blueValue
 						).getRGB());
 			}
 		}
 		
-		return convertBufferedImageToByteArray(filteredImage);
+		return convertBufferedImageToByteArray(image);
 	}
 	
 	private byte[] convertBufferedImageToByteArray(final BufferedImage image) throws IOException {
@@ -71,4 +63,8 @@ public class GreenFilter implements ImageFilter {
 		return bufferedImage;
 	}
 
+	@Override
+	public String getKey() {
+		return "blue_";
+	}
 }

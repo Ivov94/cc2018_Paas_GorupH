@@ -1,4 +1,4 @@
-package paas.rest;
+package paas;
 
 import java.util.Arrays;
 

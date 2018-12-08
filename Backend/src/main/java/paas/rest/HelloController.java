@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import paas.rest.model.DataHolder;
+import paas.model.DataHolder;
 
 @RestController
 public class HelloController {

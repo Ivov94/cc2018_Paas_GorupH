@@ -1,11 +1,9 @@
-package paas.rest.model.filter.red;
+package paas.model.filter.negative;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -13,45 +11,40 @@ import javax.imageio.ImageIO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import paas.rest.model.filter.ImageFilter;
+import paas.model.filter.ImageFilter;
 
 /**
- * This image filter is used to create a monochrome grey scale image of the colour red.
+ * This image filter is used to create a negative image.
  */
 @Component
-public class RedFilter implements ImageFilter {
+public class NegativeImageFilter implements ImageFilter {
 
-	public RedFilter() {
+	public NegativeImageFilter() {
 	}
 	
 	@Override
-	public void createAndStoreFilteredImage(final MultipartFile file) throws IOException {
-		File convFile = new File("red_" + file.getOriginalFilename());
-	    convFile.createNewFile(); 
-	    FileOutputStream fos = new FileOutputStream(convFile);
-	    
-	    fos.write(createRedImage(file.getBytes()));
-	    fos.close();
+	public byte[] createFilteredImage(final MultipartFile file) throws IOException {
+		return createNegativeImage(file.getBytes());
 	}
 	
-	private byte[] createRedImage(byte[] bytes) throws IOException {
+	private byte[] createNegativeImage(byte[] bytes) throws IOException {
 		BufferedImage image = createBufferedImage(bytes);
-		BufferedImage filteredImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				int redValue = new Color(image.getRGB(i, j)).getRed();
-				filteredImage.setRGB(
+				Color pixelColour = new Color(image.getRGB(i, j));
+				image.setRGB(
 						i,
 						j,
 						new Color(
-								redValue,
-								redValue,
-								redValue
-						).getRGB());
+								255 - pixelColour.getRed(),
+								255 - pixelColour.getGreen(),
+								255 - pixelColour.getBlue()
+								).getRGB());
 			}
 		}
 		
-		return convertBufferedImageToByteArray(filteredImage);
+		return convertBufferedImageToByteArray(image);
 	}
 	
 	private byte[] convertBufferedImageToByteArray(final BufferedImage image) throws IOException {
@@ -69,6 +62,11 @@ public class RedFilter implements ImageFilter {
 		BufferedImage bufferedImage = ImageIO.read(bis);
 		bis.close();
 		return bufferedImage;
+	}
+
+	@Override
+	public String getKey() {
+		return "negative_";
 	}
 
 }

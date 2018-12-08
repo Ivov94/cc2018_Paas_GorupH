@@ -1,4 +1,4 @@
-package paas.rest.model;
+package paas.model;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +28,4 @@ public class DataHolder {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	
-	
 }
