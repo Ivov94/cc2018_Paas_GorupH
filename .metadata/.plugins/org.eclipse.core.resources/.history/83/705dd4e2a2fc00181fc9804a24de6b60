@@ -1,0 +1,13 @@
+package paas.mongodb;
+
+import java.util.Date;
+
+public class Image {
+	private int id;
+	private String name;
+	private int data;
+	private String mimeType;
+	private String filename;
+	private Date date;
+	
+}

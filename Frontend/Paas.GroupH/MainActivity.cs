@@ -1,53 +1,141 @@
 ﻿using System;
 using Android.App;
-using Android.OS;
+using Android.Content;
 using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Android.OS;
+using Android.Support.V4.App;
+using Android.Support.V4.View;
+using Android.Support.Design.Widget;
+using Android.Support.V7.App;
+using Paas.GroupH.Fragments;
+using Android;
+using Android.Provider;
+using Android.Graphics;
+
+using AndroidFile = Java.IO.File;
+using Android.Support.V4.Content;
+using Paas.GroupH.Model;
+using System.IO;
 
 namespace Paas.GroupH
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", MainLauncher = true, LaunchMode = Android.Content.PM.LaunchMode.SingleTop, Icon = "@drawable/icon")]
     public class MainActivity : AppCompatActivity
     {
+        ViewPager pager;
+        TabsAdapter adapter;
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        private static string[] PERMISSIONS_NEEDED =
         {
-            base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.activity_main);
+            Manifest.Permission.Camera,
+            Manifest.Permission.ReadExternalStorage,
+            Manifest.Permission.WriteExternalStorage
+        };
 
-            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
-
-            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
-            fab.Click += FabOnClick;
-        }
-
-        public override bool OnCreateOptionsMenu(IMenu menu)
+        protected override void OnCreate(Bundle bundle)
         {
-            MenuInflater.Inflate(Resource.Menu.menu_main, menu);
-            return true;
-        }
+            base.OnCreate(bundle);
+            SetContentView(Resource.Layout.main);
+            var permissionManager = new PermissionsManager(this, PERMISSIONS_NEEDED);
+            permissionManager.EnablePermissions();
 
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            int id = item.ItemId;
-            if (id == Resource.Id.action_settings)
+            CreateDir();
+
+
+            var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            if (toolbar != null)
             {
-                return true;
+                SetSupportActionBar(toolbar);
+                SupportActionBar.SetDisplayHomeAsUpEnabled(false);
+                SupportActionBar.SetHomeButtonEnabled(false);
+
             }
 
-            return base.OnOptionsItemSelected(item);
+            adapter = new TabsAdapter(this, SupportFragmentManager);
+            pager = FindViewById<ViewPager>(Resource.Id.pager);
+            var tabs = FindViewById<TabLayout>(Resource.Id.tabs);
+            pager.Adapter = adapter;
+            tabs.SetupWithViewPager(pager);
+            pager.OffscreenPageLimit = 3;
+            
         }
 
-        private void FabOnClick(object sender, EventArgs eventArgs)
+        private void CreateDir()
         {
-            View view = (View) sender;
-            Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
-                .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
+            var directory = new AndroidFile(Android.OS.Environment.ExternalStorageDirectory, "grouph");
+
+            if (!directory.Exists())
+                directory.Mkdirs();
+
+            if(!System.IO.File.Exists(System.IO.Path.Combine(directory.Path, "config.json")))
+            {
+                var settings = new ConfigModel()
+                {
+                    BaseUrl = "http://localhost",
+                    Port = 8080
+                };
+                var save = Newtonsoft.Json.JsonConvert.SerializeObject(settings);
+
+                try
+                {
+                    using (StreamWriter writer = new StreamWriter(System.IO.Path.Combine(directory.Path, "config.json")))
+                    {
+                        writer.Write(save);
+                    }
+                }
+                catch(Exception ex)
+                {
+                }
+                
+                    
+                    
+            }
+
         }
-	}
+
+        class TabsAdapter : FragmentStatePagerAdapter
+        {
+            string[] titles;
+
+            public override int Count
+            {
+                get
+                {
+                    return titles.Length;
+                }
+            }
+
+            public TabsAdapter(Android.Content.Context context, Android.Support.V4.App.FragmentManager fm) : base(fm)
+            {
+                titles = context.Resources.GetTextArray(Resource.Array.sections);
+            }
+
+            public override Java.Lang.ICharSequence GetPageTitleFormatted(int position)
+            {
+                return new Java.Lang.String(titles[position]);
+            }
+
+            public override Android.Support.V4.App.Fragment GetItem(int position)
+            {
+                switch (position)
+                {
+                    case 0:
+                        return Fragment1.NewInstance();
+                    case 1:
+                        return Fragment2.NewInstance();
+                    case 2:
+                        return Fragment3.NewInstance();
+                }
+                return null;
+            }
+
+            public override int GetItemPosition(Java.Lang.Object frag)
+            {
+                return PositionNone;
+            }
+        }
+    }
 }
 

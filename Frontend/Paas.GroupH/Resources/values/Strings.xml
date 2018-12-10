@@ -1,4 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Paas.GroupH</string>
-    <string name="action_settings">Settings</string>
+  <string name="app_name">GroupH Android App</string>
+  <string name="fragment1">Select an image</string>
+  <string name="fragment2">Take a picture</string>
+  <string name="takePicture">Take a picture</string>
+  <string name="postPicture">Post picture</string>
+  <string name="saveSettings">Save</string>
 </resources>

@@ -1,0 +1,14 @@
+package paas.mongodb;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+
+public class MongoDb {
+	
+	private ApplicationContext ApplicationContext;
+
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.ApplicationContext = applicationContext;
+    }
+	//applicationContext.getEnvironment().getProperty(<keyName>)
+}
