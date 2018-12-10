@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:rowCount="2"
+	android:columnCount="2"
+	android:orientation="vertical">
+		
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+	
+
+		<TextView
+			android:text="Restful service hostSettings"
+			android:id="@+id/settingsTitle"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:textSize="@dimen/abc_action_bar_content_inset_material"
+			android:paddingLeft="@dimen/abc_text_size_body_2_material"
+		/>
+		<TextView
+			android:text="Host:"
+			android:id="@+id/labelHost"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="left"
+			android:paddingLeft="@dimen/abc_text_size_body_2_material"
+			android:layout_marginTop="@dimen/fastscroll_margin"
+		/>
+		<EditText
+			android:text="http://10.0.0.99"
+			android:id="@+id/hostText"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="left"
+			android:paddingLeft="@dimen/abc_text_size_body_2_material"
+		/>
+		<TextView
+			android:text="Port:"
+			android:id="@+id/labelHost"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="left"
+			android:paddingLeft="@dimen/abc_text_size_body_2_material"
+			android:layout_marginTop="@dimen/fastscroll_margin"
+		/>
+		<EditText
+			android:text="8080"
+			android:id="@+id/hostPort"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="left"
+			android:paddingLeft="@dimen/abc_text_size_body_2_material"
+		/>
+		<Button
+			android:id="@+id/btnSaveSettings"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/saveSettings"
+		/>
+		<TextView
+			android:text="saved..."
+			android:id="@+id/infoText"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:paddingLeft="@dimen/abc_text_size_body_2_material"
+			android:layout_marginTop="@dimen/fastscroll_margin"
+			android:visibility="invisible"
+		/>
+</LinearLayout>
+
+</LinearLayout>
