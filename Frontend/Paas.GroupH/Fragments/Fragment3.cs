@@ -77,7 +77,7 @@ namespace Paas.GroupH.Fragments
             var settings = new ConfigModel()
             {
                 BaseUrl = hostEdit.Text,
-                Port = Convert.ToInt32(portEdit.Text)
+                Port = portEdit.Text
             };
             var save = Newtonsoft.Json.JsonConvert.SerializeObject(settings);
 

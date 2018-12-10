@@ -10,16 +10,13 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace Paas.GroupH.Model
+namespace Paas.GroupH.Helper
 {
-    public class ConfigModel
+    public static class Values
     {
-        public string BaseUrl { get; set; }
-        public string Port { get; set; }
+        public const string Foldername = "grouph";
+        public const string DefaultHost = "http://localhost";
+        public const string DefaultPort = "80";
 
-        public ConfigModel()
-        {
-
-        }
     }
 }

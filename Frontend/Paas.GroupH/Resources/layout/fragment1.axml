@@ -13,11 +13,15 @@
 		android:horizontalSpacing="10dp"
 		android:stretchMode="columnWidth"
 		android:gravity="center"
+		android:layout_weight="7"
 	/>
 	<Button
-		android:text="Send image"
+		android:layout_weight="1"
+		android:text="Post image"
 		android:id="@+id/sendImage"
 		android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:background="@drawable/abc_list_focused_holo"
 		></Button>
 </LinearLayout>
