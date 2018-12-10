@@ -38,21 +38,22 @@
 		    <artifactId>awaitility</artifactId>
 		    <scope>provided</scope>
 		</dependency>
+   
 		
 		<dependency>
 		    <groupId>org.awaitility</groupId>
 		    <artifactId>awaitility-proxy</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.awaitility/awaitility -->
-<dependency>
-    <groupId>org.awaitility</groupId>
-    <artifactId>awaitility</artifactId>
-    <version>3.0.0</version>
-</dependency>
-<!-- https://mvnrepository.com/artifact/org.awaitility/awaitility-parent -->
-<dependency>
-    <groupId>org.awaitility</groupId>
-    <artifactId>awaitility-parent</artifactId>
+		<dependency>
+    	<groupId>org.awaitility</groupId>
+    	<artifactId>awaitility</artifactId>
+   		 <version>3.0.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.awaitility/awaitility-parent -->
+		<dependency>
+   	 <groupId>org.awaitility</groupId>
+    	<artifactId>awaitility-parent</artifactId>
     <version>3.0.0</version>
     <type>pom</type>
 </dependency>

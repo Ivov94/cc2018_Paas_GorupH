@@ -20,7 +20,7 @@ public class ImageRetrievalController {
 	public ImageRetrievalController() {
 	}
 
-	@GetMapping("/getImage/{imageId}")
+	//@GetMapping("/getImage/{imageId}")
     public ResponseEntity<byte[]> getImage(@PathVariable String imageId) {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setCacheControl(CacheControl.noCache().getHeaderValue());
