@@ -73,9 +73,10 @@ namespace Paas.GroupH
             {
                 var settings = new ConfigModel()
                 {
-                    BaseUrl = "http://localhost",
-                    Port = 8080
+                    BaseUrl = Helper.Values.DefaultHost,
+                    Port = Helper.Values.DefaultPort
                 };
+
                 var save = Newtonsoft.Json.JsonConvert.SerializeObject(settings);
 
                 try

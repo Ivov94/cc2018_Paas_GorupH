@@ -7,4 +7,5 @@ Frontend/.vs
 Frontend/Paas.GroupH/bin
 Frontend/Paas.GroupH/obj
 Servers
-.medadata
+.metadata
+.recommenders

@@ -28,18 +28,13 @@ namespace Paas.GroupH.Fragments
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            View view = inflater.Inflate(Resource.Layout.fragment1, null);
+            var ignored = base.OnCreateView(inflater, container, savedInstanceState);
 
-            gridView = Activity.FindViewById<GridView>(Resource.Id.gridview);
-
-
-            //gridView.Adapter = new ImageAdapter(Activity);
-
-            //gridView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs args) {
-            //    Toast.MakeText(Activity, args.Position.ToString(), ToastLength.Short).Show();
-            //};
-
-            return view;
+            return inflater.Inflate(Resource.Layout.fragment1, null);
+        }
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
         }
 
     }

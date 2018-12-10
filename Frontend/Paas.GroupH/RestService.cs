@@ -10,16 +10,15 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace Paas.GroupH.Model
+namespace Paas.GroupH
 {
-    public class ConfigModel
+    public class RestService
     {
-        public string BaseUrl { get; set; }
-        public string Port { get; set; }
-
-        public ConfigModel()
+        public static string PostData(string path, string token, string postJson)
         {
 
+
+            return string.Empty;
         }
     }
 }
