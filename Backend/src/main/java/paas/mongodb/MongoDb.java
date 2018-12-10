@@ -3,8 +3,6 @@ package paas.mongodb;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
-import ch.qos.logback.core.pattern.Converter;
-
 public class MongoDb {
 	
 	private ApplicationContext ApplicationContext;
