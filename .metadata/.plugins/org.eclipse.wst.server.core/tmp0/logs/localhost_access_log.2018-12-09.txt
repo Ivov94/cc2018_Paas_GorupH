@@ -1,2 +1,0 @@
-127.0.0.1 - - [09/Dec/2018:21:24:22 +0100] "GET / HTTP/1.1" 404 1074
-0:0:0:0:0:0:0:1 - - [09/Dec/2018:21:24:23 +0100] "GET /paas/WEB-INF/classes/paas/Application.java HTTP/1.1" 404 1047
