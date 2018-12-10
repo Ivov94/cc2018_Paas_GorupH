@@ -39,7 +39,7 @@ import paas.model.task.MyRunnable;
 
 
 @RestController
-public class FileUploadControllerNew {
+public class FileUploadController {
 	private static Duration MAX_POLL = Duration.FIVE_SECONDS;
 	private static Duration POLL_INTERVAL = new Duration(50, TimeUnit.MILLISECONDS);
 
@@ -52,7 +52,7 @@ public class FileUploadControllerNew {
 	@Autowired
 	private JoinProcessor joinProcessor;
 	
-	public FileUploadControllerNew() {
+	public FileUploadController() {
 	}
 	
 	private boolean isFinished(List<MyRunnable> list) {
