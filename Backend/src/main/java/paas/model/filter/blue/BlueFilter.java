@@ -9,7 +9,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import paas.model.filter.ImageFilter;
 
@@ -23,8 +22,8 @@ public class BlueFilter implements ImageFilter {
 	}
 	
 	@Override
-	public byte[] createFilteredImage(final MultipartFile file) throws IOException {
-		return createBlueImage(file.getBytes());
+	public byte[] createFilteredImage(final byte[] file) throws IOException {
+		return createBlueImage(file);
 	}
 	
 	private byte[] createBlueImage(byte[] bytes) throws IOException {

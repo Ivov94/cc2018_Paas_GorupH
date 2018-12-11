@@ -1,29 +1,25 @@
 package paas.model.task;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import paas.model.filter.ImageFilter;
 
-public class MyRunnable implements Runnable {
+public class FilteringTask implements Runnable {
 
 	private ImageFilter filter;
-	private MultipartFile file;
+	private byte[] file;
 	
 	private States state;
 	private byte[] resultData;
 	
-	private MyRunnable(final ImageFilter filter, final MultipartFile file) {
+	private FilteringTask(final ImageFilter filter, final byte[] file) {
 		this.filter = filter;
 		this.file = file;
 		this.state = States.READY;
 	}
 	
-	public static MyRunnable createImageFilterTask(final ImageFilter filter, final MultipartFile file) {
-		return new MyRunnable(filter, file);
+	public static FilteringTask createImageFilterTask(final ImageFilter filter, final byte[] file) {
+		return new FilteringTask(filter, file);
 	}
 	
 	public enum States {

@@ -13,24 +13,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import paas.model.api.DataRetrieverService;
-import paas.mongodb.Image;
+import paas.mongodb.Progress;
 
 @RestController
-public class ImageRetrievalController {
+public class ProgressRetrievalController {
 
 	@Autowired
 	private DataRetrieverService dataRetrieverService;
 	
-	public ImageRetrievalController() {
+	public ProgressRetrievalController() {
 	}
 
-	@RequestMapping(value = "/getImage/{imageName}", method = { RequestMethod.GET })
-    public ResponseEntity<Image> getImage(@PathVariable String imageName) {
+	@RequestMapping(value = "/getProgress/{imageName}", method = { RequestMethod.GET })
+    public ResponseEntity<Progress> getProgress(@PathVariable String imageName) {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-	    ResponseEntity<Image> response = new ResponseEntity<Image>(headers, HttpStatus.NOT_FOUND);
+	    ResponseEntity<Progress> response = new ResponseEntity<Progress>(headers, HttpStatus.NOT_FOUND);
     	try {
-			response = new ResponseEntity<Image>(dataRetrieverService.retrieveImage(imageName), headers, HttpStatus.OK);
+			response = new ResponseEntity<Progress>(dataRetrieverService.retrieveProgress(imageName), headers, HttpStatus.OK);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

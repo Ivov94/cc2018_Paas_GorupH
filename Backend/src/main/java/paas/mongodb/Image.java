@@ -9,7 +9,7 @@ public class Image {
 	public String id;
 	
 	public String name;
-	public int data;
+	public byte[] data;
 	public String mimeType;
 	public String filename;
 	public Date date;
@@ -20,7 +20,7 @@ public class Image {
 	{
 	}
 
-	public Image(String id, String name, int data, String mimeType, String filename, Date date, int step,
+	public Image(String id, String name, byte[] data, String mimeType, String filename, Date date, int step,
 			boolean isDone) {
 		super();
 		this.id = id;

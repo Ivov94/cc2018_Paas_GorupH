@@ -9,7 +9,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import paas.model.filter.ImageFilter;
 
@@ -23,8 +22,8 @@ public class NegativeImageFilter implements ImageFilter {
 	}
 	
 	@Override
-	public byte[] createFilteredImage(final MultipartFile file) throws IOException {
-		return createNegativeImage(file.getBytes());
+	public byte[] createFilteredImage(final byte[] file) throws IOException {
+		return createNegativeImage(file);
 	}
 	
 	private byte[] createNegativeImage(byte[] bytes) throws IOException {
