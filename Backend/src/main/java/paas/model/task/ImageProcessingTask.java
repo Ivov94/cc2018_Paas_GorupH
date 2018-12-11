@@ -14,6 +14,11 @@ import paas.model.api.DataStorageService;
 import paas.model.api.JoinProcessor;
 import paas.model.filter.ImageFilter;
 
+/**
+ * This is the main Task of performing the filtering of the images. When a Thread of this class gets executed,
+ * all filters are executed in parallel and the process polls for the result periodically. Once all filters are done,
+ * the image gets joined and stored.
+ */
 public class ImageProcessingTask implements Runnable {
 	
 	private static Duration MAX_POLL = Duration.FIVE_SECONDS;
@@ -59,20 +64,22 @@ public class ImageProcessingTask implements Runnable {
 	}
 	
 	private List<FilteringTask> filterInParallel() {
-		List<FilteringTask> myRunnableList = imageFilters.stream()
-				.map(filter -> FilteringTask.createImageFilterTask(filter, imageFile)).collect(Collectors.toList());
+		List<FilteringTask> myRunnableList = imageFilters
+				.stream()
+				.map(filter -> FilteringTask.createImageFilterTask(filter, imageFile, dataStorageService, imageName))
+				.collect(Collectors.toList());
 		int numberofTries = 0;
 		while (!isFinished(myRunnableList)) {
 			numberofTries++;
 			if (isIOException(myRunnableList) || (numberofTries == 3)) {
 				System.out.println("System error");
+				dataStorageService.updateProgressFail(imageName);
 				break;
 			}
 
 			List<FilteringTask> activeRunnableList = myRunnableList
 					.stream()
-					.filter(predicate -> predicate.isActive())
-					.map(runnable -> runnable)
+					.filter(task -> task.isActive())
 					.collect(Collectors.toList());
 
 			activeRunnableList

@@ -51,4 +51,21 @@ public class DataService implements DataStorageService, DataRetrieverService {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void updateProgressIncrement(String key) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void updateProgressAllParallelTasks() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateProgressFail(String progressKey) {
+		// TODO Auto-generated method stub
+		
+	}
 }

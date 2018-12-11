@@ -11,4 +11,18 @@ public interface DataStorageService {
 	 * @param key the identifier by which the image is retrievable
 	 */
 	void storeImage(byte[] imageToStore, String key);
+	
+	/**
+	 * Update the progress of a task in the database to increment the progress.
+	 * @param progressKey the key to identify the task.
+	 */
+	void updateProgressIncrement(String progressKey);
+	
+	void updateProgressAllParallelTasks();
+	
+	/**
+	 * Update a progress to indicate that it failed.
+	 * @param progressKey the key to identify the task.
+	 */
+	void updateProgressFail(String progressKey);
 }

@@ -12,9 +12,4 @@ public interface ImageRepository extends MongoRepository<Image, String> {
 	public Optional<Image> findByName(String name);
 	
 	public List<Image> findListByName(String name);
-	
-	//public Image addImage(Image image);
-	
-	//public Image updateImage(Image image);
-	
 }
