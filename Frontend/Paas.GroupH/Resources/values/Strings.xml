@@ -4,6 +4,7 @@
   <string name="fragment1">Select an image</string>
   <string name="fragment2">Take a picture</string>
   <string name="takePicture">Take a picture</string>
-  <string name="postPicture">Post picture</string>
+  <string name="postPicture">Upload Image</string>
   <string name="saveSettings">Save</string>
+  <string name="notFound">No image found. Please take a new picture</string>
 </resources>

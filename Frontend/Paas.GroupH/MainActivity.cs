@@ -66,6 +66,8 @@ namespace Paas.GroupH
         {
             var directory = new AndroidFile(Android.OS.Environment.ExternalStorageDirectory, "grouph");
 
+            Helper.Values.FolderPath = directory.Path;
+
             if (!directory.Exists())
                 directory.Mkdirs();
 
@@ -74,7 +76,8 @@ namespace Paas.GroupH
                 var settings = new ConfigModel()
                 {
                     BaseUrl = Helper.Values.DefaultHost,
-                    Port = Helper.Values.DefaultPort
+                    Port = Helper.Values.DefaultPort,
+                    Path = Helper.Values.FolderPath
                 };
 
                 var save = Newtonsoft.Json.JsonConvert.SerializeObject(settings);

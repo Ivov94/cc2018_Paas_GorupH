@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import paas.model.api.DataRetrieverService;
 import paas.model.api.DataStorageService;
 import paas.mongodb.Image;
-import paas.mongodb.ImageRepository;
+import paas.mongodb.IImageRepository;
 import paas.mongodb.Progress;
 
 @Component
@@ -22,7 +22,7 @@ public class DataService implements DataStorageService, DataRetrieverService {
 	//see: https://docs.spring.io/spring-data/mongodb/docs/1.2.0.RELEASE/reference/html/mongo.repositories.html -> 6.3.1 Geo-spatial repository queries
 	
 	@Autowired
-	private ImageRepository imageRepository;
+	private IImageRepository imageRepository;
 	
 	public DataService() {
 	}
@@ -40,7 +40,7 @@ public class DataService implements DataStorageService, DataRetrieverService {
 
 	@Override
 	public void storeImage(byte[] imageToStore, String key) {
-		imageRepository.save(new Image(key, key, imageToStore, key, key, new Date(), 5, true));
+		imageRepository.save(new Image(key, key, imageToStore, key, key, new Date()));
 	    try {
 	    	File convFile = new File(key + ".png");
 			convFile.createNewFile();

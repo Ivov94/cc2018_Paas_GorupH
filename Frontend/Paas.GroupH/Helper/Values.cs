@@ -14,9 +14,14 @@ namespace Paas.GroupH.Helper
 {
     public static class Values
     {
+        public const string LogTag = "GroupHLogs";
+        public static string FolderPath { get; set; }
+
         public const string Foldername = "grouph";
-        public const string DefaultHost = "http://localhost";
+
+        public const string DefaultHost = "http://10.0.0.99";
         public const string DefaultPort = "80";
+        public const string DefaultPath = "/img";
 
     }
 }

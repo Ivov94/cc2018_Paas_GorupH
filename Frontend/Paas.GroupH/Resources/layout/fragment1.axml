@@ -1,27 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/gridview"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:columnWidth="90dp"
-		android:numColumns="auto_fit"
-		android:verticalSpacing="10dp"
-		android:horizontalSpacing="10dp"
-		android:stretchMode="columnWidth"
-		android:gravity="center"
-		android:layout_weight="7"
+    <ImageView
+		android:id="@+id/imageView"
+		android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="300.0dp"
+        android:layout_weight="7"
+		android:adjustViewBounds="true"
 	/>
-	<Button
-		android:layout_weight="1"
-		android:text="Post image"
-		android:id="@+id/sendImage"
-		android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-		android:layout_gravity="bottom"
-		android:background="@drawable/abc_list_focused_holo"
-		></Button>
+	
+	<LinearLayout 
+		android:id="@+id/LinearLayout02" 
+		android:layout_height="wrap_content" 
+		android:layout_width="match_parent" 
+		android:layout_alignParentBottom="true">
+			<Button 
+				android:id="@+id/prevImage" 
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content" 
+				android:layout_weight="1" 
+				android:layout_gravity="bottom"
+				android:text="Previous"
+				android:orientation="horizontal"
+				>
+			</Button>
+			<Button
+				android:layout_weight="2"
+				android:text="Upload image"
+				android:id="@+id/sendImage"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="bottom"
+				android:background="@drawable/abc_list_focused_holo"
+				android:orientation="horizontal"
+			/>
+			<Button 
+				android:id="@+id/nextImage" 
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"
+				android:layout_weight="1" 
+				android:layout_gravity="bottom"
+				android:text="Next"
+				android:orientation="horizontal">
+		</Button>
+	</LinearLayout>
+
+    
+
+	
 </LinearLayout>

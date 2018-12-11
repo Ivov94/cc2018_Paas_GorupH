@@ -9,6 +9,7 @@ public class MongoDb {
 	
 	private String DbHost;
 	private Integer DbPort;
+	private String Database;
 	private String Username;
 	private String Password;
 	
@@ -17,6 +18,7 @@ public class MongoDb {
         
         this.DbHost = this.ApplicationContext.getEnvironment().getProperty("spring.data.mongodb.host");
         this.DbPort = Integer.parseInt(this.ApplicationContext.getEnvironment().getProperty("spring.data.mongodb.port"));
+        this.Database = this.ApplicationContext.getEnvironment().getProperty("spring.data.mongodb.host");
         //if your config is enabled to ask username/password.. 
         this.Username = this.ApplicationContext.getEnvironment().getProperty("spring.data.mongodb.username");
         this.Password = this.ApplicationContext.getEnvironment().getProperty("spring.data.mongodb.password");

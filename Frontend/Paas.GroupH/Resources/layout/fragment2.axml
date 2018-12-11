@@ -10,13 +10,23 @@
         android:id="@+id/imgView"
         android:adjustViewBounds="true" />
 	
+	
+
 	<Button
         android:id="@+id/btntakePicture"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/takePicture"
-		android:background="@drawable/abc_list_focused_holo"
 		android:layout_gravity="bottom"
+	/>
+	<TextView 
+		android:id="@+id/infoPost"	
+		android:text=""
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:gravity="center_horizontal"
+		android:visibility="invisible"
 	/>
 	<Button
         android:id="@+id/btnPostPicture"
@@ -25,6 +35,7 @@
         android:text="@string/postPicture"
 		android:visibility="invisible"
 		android:layout_gravity="bottom"
-		android:background="@drawable/abc_list_focused_holo"
+		android:gravity="bottom"
 	/>
+	
 </LinearLayout>

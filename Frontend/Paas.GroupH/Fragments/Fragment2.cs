@@ -8,8 +8,8 @@ using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
-
-
+using System.Reflection;
+using System.Threading.Tasks;
 using AndroidFile = Java.IO.File;
 
 
@@ -24,6 +24,7 @@ namespace Paas.GroupH.Fragments
 
         private Button btnCamera;
         private Button btnPostImage;
+        private TextView infoPost;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -52,7 +53,7 @@ namespace Paas.GroupH.Fragments
             base.OnViewCreated(view, savedInstanceState);
             btnCamera = view.FindViewById<Button>(Resource.Id.btntakePicture);
             btnPostImage = view.FindViewById<Button>(Resource.Id.btnPostPicture);
-
+            infoPost = view.FindViewById<TextView>(Resource.Id.infoPost);
 
             btnCamera.Click += TakeAPicture_Click;
 
@@ -80,6 +81,17 @@ namespace Paas.GroupH.Fragments
 
         private void PostRestService_Click(object sender, System.EventArgs e)
         {
+            var uri = Android.Net.Uri.FromFile(_file);
+
+            var input = Activity.ContentResolver.OpenInputStream(uri);
+
+            infoPost.Text = "uploading...";
+            infoPost.Visibility = ViewStates.Visible;
+
+            var image = RestService.PostData(input, _file.Name);
+            
+            
+
 
         }
 
@@ -90,7 +102,7 @@ namespace Paas.GroupH.Fragments
             int height = Resources.DisplayMetrics.HeightPixels;
             int width = _imgView.Width;
 
-            _resizedBitmap = LoadAndResizeBitmap(_file.Path, width, height);
+            _resizedBitmap = Helper.ImageEditor.LoadAndResizeBitmap(_file.Path, width, height);
             _imgView.SetImageBitmap(_resizedBitmap);
 
             btnCamera.Visibility = ViewStates.Invisible;
@@ -98,28 +110,6 @@ namespace Paas.GroupH.Fragments
 
         }
 
-        public static Bitmap LoadAndResizeBitmap(string fileName, int width, int height)
-        {
-            // First we get the the dimensions of the file on disk
-            BitmapFactory.Options options = new BitmapFactory.Options { InJustDecodeBounds = true };
-            BitmapFactory.DecodeFile(fileName, options);
-
-            int outHeight = options.OutHeight;
-            int outWidth = options.OutWidth;
-            int inSampleSize = 1;
-
-            if (outHeight > height || outWidth > width)
-            {
-                inSampleSize = outWidth > outHeight
-                                   ? outHeight / height
-                                   : outWidth / width;
-            }
-
-            options.InSampleSize = inSampleSize;
-            options.InJustDecodeBounds = false;
-            Bitmap resizedBitmap = BitmapFactory.DecodeFile(fileName, options);
-
-            return resizedBitmap;
-        }
+        
     }
 }

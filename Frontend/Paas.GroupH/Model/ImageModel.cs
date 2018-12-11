@@ -12,16 +12,11 @@ using Android.Widget;
 
 namespace Paas.GroupH.Model
 {
-    public class ConfigModel
+    public class ImageModel
     {
-        public string BaseUrl { get; set; }
-        public string Port { get; set; }
+        public string Filename { get; set; }
 
-        public string Path { get; set; }
+        public string Fullpath { get; set; }
 
-        public ConfigModel()
-        {
-
-        }
     }
 }

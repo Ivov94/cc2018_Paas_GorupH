@@ -97,9 +97,6 @@ namespace Paas.GroupH.Fragments
                 infoText.Visibility = ViewStates.Visible;
             }
 
-
-
-
         }
     }
 }
