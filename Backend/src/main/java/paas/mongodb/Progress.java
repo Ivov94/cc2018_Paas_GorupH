@@ -59,6 +59,13 @@ public class Progress {
 		if(image.progress4 == Image.UpdateProgress.Done)
 			count++;
 		
+		if(count == 4)
+		{
+			image.isDone = true;
+			ImageRepository.save(image);
+		}
+			
+		
 		return count;
 	}
 }
