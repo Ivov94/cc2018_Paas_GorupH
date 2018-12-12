@@ -4,38 +4,54 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <ImageView
-        android:src="@android:drawable/ic_menu_gallery"
-        android:layout_width="fill_parent"
+		android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
         android:layout_height="300.0dp"
         android:id="@+id/imgView"
-        android:adjustViewBounds="true" />
-	
-	
-
-	<Button
-        android:id="@+id/btntakePicture"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/takePicture"
-		android:layout_gravity="bottom"
+        android:adjustViewBounds="true" 
+		android:layout_weight="5"
 	/>
-	<TextView 
-		android:id="@+id/infoPost"	
-		android:text=""
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="bottom"
-		android:gravity="center_horizontal"
-		android:visibility="invisible"
-	/>
-	<Button
-        android:id="@+id/btnPostPicture"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/postPicture"
-		android:visibility="invisible"
-		android:layout_gravity="bottom"
+	
+	<LinearLayout 
+		android:id="@+id/LinearLayout02"
 		android:gravity="bottom"
-	/>
-	
+		
+		android:layout_height="wrap_content" 
+		android:layout_width="match_parent" 
+		android:layout_alignParentBottom="true">
+
+		<Button
+			android:id="@+id/btntakePicture"
+			android:text="@string/takePicture"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom"
+			android:layout_weight="2" 
+			android:orientation="horizontal"
+			
+		/>
+		<TextView 
+			android:id="@+id/infoPost"	
+			android:text="Test Message"
+			android:textSize="@dimen/tooltip_y_offset_touch"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom"
+			android:layout_weight="2" 
+			android:orientation="horizontal"
+			android:visibility="invisible"
+			
+		/>
+		<Button
+			android:id="@+id/btnPostPicture"
+			android:text="@string/postPicture"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom"
+			android:layout_weight="2" 
+			android:orientation="horizontal"
+			android:visibility="invisible"
+		/>
+	</LinearLayout>
 </LinearLayout>

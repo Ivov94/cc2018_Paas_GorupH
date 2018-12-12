@@ -15,10 +15,11 @@ using Android.Views;
 using Android.Widget;
 using Org.Apache.Http.Client;
 using Org.Apache.Http.Protocol;
+using Paas.GroupH.Fragments;
 
 namespace Paas.GroupH
 {
-    public class RestService
+    public class RestService : Fragment
     {
         public static string Url = Helper.Values.DefaultHost + (Helper.Values.DefaultPort != "80" ? Helper.Values.DefaultPort : "") + Helper.Values.DefaultPath;
 
@@ -33,17 +34,31 @@ namespace Paas.GroupH
 
                 var httpClient = new HttpClient();
                 Log.Info(Helper.Values.LogTag, " posting image...");
+
                 var httpResponseMessage = await httpClient.PostAsync(Url, content);
-                Log.Info(Helper.Values.LogTag, "image uploaded...");
 
-                Log.Info(Helper.Values.LogTag, "waiting for response from server...");
-                var result = await httpResponseMessage.Content.ReadAsStringAsync();
-                Log.Info(Helper.Values.LogTag, string.Format("result.. {0}", result)); ;
+                if(httpResponseMessage.IsSuccessStatusCode)
+                {
+                    
+                    Log.Info(Helper.Values.LogTag, "image uploaded...");
+                    Log.Info(Helper.Values.LogTag, "waiting for response from server...");
 
-                return result;
+                    var result = await httpResponseMessage.Content.ReadAsStringAsync();
+                    Log.Info(Helper.Values.LogTag, string.Format("result.. {0}", result)); ;
+                    
+                    
+                    return result;
+                }
+                else
+                {
+                    Log.Info(Helper.Values.LogTag, string.Format("ERROR.. not success...")); ;
+                }
+
+                return string.Empty;
             }
             catch(Exception ex)
             {
+                Log.Info(Helper.Values.LogTag, string.Format("ERROR.. {0}", ex.Message)); ;
                 return ex.Message;
             }
         }

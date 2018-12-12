@@ -13,7 +13,7 @@
 	
 
 		<TextView
-			android:text="Restful service hostSettings"
+			android:text="Settings"
 			android:id="@+id/settingsTitle"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"

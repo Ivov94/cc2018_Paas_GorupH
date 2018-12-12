@@ -15,12 +15,12 @@ public interface IImageRepository extends MongoRepository<Image, String> {
 	
 	public List<Image> findListByName(String name);
 	
-	//public void UpdateProg1(String name, Image.UpdateProgress progress);
+	//public void UpdateProg1(String name, Image.UpdateProgress progress1);
 	
-	//public void UpdateProg2(String name, Image.UpdateProgress progress);
+	//public void UpdateProg2(String name, Image.UpdateProgress progress2);
 	
-	//public void UpdateProg3(String name, Image.UpdateProgress progress);
+	//public void UpdateProg3(String name, Image.UpdateProgress progress3);
 	
-	//public void UpdateProg4(String name, Image.UpdateProgress progress);
+	//public void UpdateProg4(String name, Image.UpdateProgress progress4);
 	
 }

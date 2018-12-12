@@ -23,5 +23,7 @@ namespace Paas.GroupH.Helper
         public const string DefaultPort = "80";
         public const string DefaultPath = "/img";
 
+        public static int TestIndex = -1;
+
     }
 }

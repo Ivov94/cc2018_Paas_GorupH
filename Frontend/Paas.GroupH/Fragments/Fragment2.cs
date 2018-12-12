@@ -8,6 +8,8 @@ using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
+using Com.Bumptech.Glide;
+using Com.Bumptech.Glide.Request;
 using System.Reflection;
 using System.Threading.Tasks;
 using AndroidFile = Java.IO.File;
@@ -17,10 +19,9 @@ namespace Paas.GroupH.Fragments
 {
     public class Fragment2 : Fragment
     {
-        private ImageView _imgView;
-        private Bitmap _resizedBitmap;
-        private AndroidFile _file;
-        private AndroidFile _directory;
+        private ImageView imgView;
+        private AndroidFile file;
+        private AndroidFile directory;
 
         private Button btnCamera;
         private Button btnPostImage;
@@ -57,7 +58,7 @@ namespace Paas.GroupH.Fragments
 
             btnCamera.Click += TakeAPicture_Click;
 
-            _imgView = view.FindViewById<ImageView>(Resource.Id.imgView);
+            imgView = view.FindViewById<ImageView>(Resource.Id.imgView);
 
             btnPostImage.Click += PostRestService_Click;
 
@@ -66,29 +67,37 @@ namespace Paas.GroupH.Fragments
         private void TakeAPicture_Click(object sender, System.EventArgs e)
         {
             Intent intent = new Intent(MediaStore.ActionImageCapture);
-            _directory = new AndroidFile(Environment.ExternalStorageDirectory, "grouph");
-            if (!_directory.Exists())
+            directory = new AndroidFile(Environment.ExternalStorageDirectory, "grouph");
+            if (!directory.Exists())
             {
-                _directory.Mkdirs();
+                directory.Mkdirs();
             }
 
-            _file = new AndroidFile(_directory, UniqueImgFileName());
+            file = new AndroidFile(directory, UniqueImgFileName());
 
-            intent.PutExtra(MediaStore.ExtraOutput, FileProvider.GetUriForFile(this.Context, _providerName, _file));
+            intent.PutExtra(MediaStore.ExtraOutput, FileProvider.GetUriForFile(this.Context, _providerName, file));
             intent.SetFlags(ActivityFlags.GrantWriteUriPermission);
             StartActivityForResult(intent, 0);
         }
 
         private void PostRestService_Click(object sender, System.EventArgs e)
         {
-            var uri = Android.Net.Uri.FromFile(_file);
+            var uri = Android.Net.Uri.FromFile(file);
 
             var input = Activity.ContentResolver.OpenInputStream(uri);
 
             infoPost.Text = "uploading...";
             infoPost.Visibility = ViewStates.Visible;
 
-            var image = RestService.PostData(input, _file.Name);
+            try
+            {
+                //task started...
+                var image = RestService.PostData(input, file.Name);
+            }
+            catch(System.Exception ex)
+            {
+                infoPost.Text = string.Format("There was an exception {0}", ex.Message);
+            }
             
             
 
@@ -100,16 +109,22 @@ namespace Paas.GroupH.Fragments
             base.OnActivityResult(requestCode, (int)resultCode, data);
             
             int height = Resources.DisplayMetrics.HeightPixels;
-            int width = _imgView.Width;
+            int width = imgView.Width;
 
-            _resizedBitmap = Helper.ImageEditor.LoadAndResizeBitmap(_file.Path, width, height);
-            _imgView.SetImageBitmap(_resizedBitmap);
+            RequestOptions options = new RequestOptions().EncodeQuality(50).FitCenter();
+
+            Glide.With(this).Load(file.AbsolutePath).Apply(options).Into(imgView);
 
             btnCamera.Visibility = ViewStates.Invisible;
             btnPostImage.Visibility = ViewStates.Visible;
 
         }
+        public override void OnDestroyView()
+        {
+            base.OnDestroyView();
+            Glide.With(this).Clear(imgView);
+            Glide.With(this).Dispose();
+        }
 
-        
     }
 }
