@@ -1,71 +1,94 @@
 package paas.mongodb;
 
-import java.io.FileNotFoundException;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 
 public class Progress {
+	
+	@Id
+	private String imageName;
+	
+	private boolean failed;
+	private String message;
+	
+	private boolean filterNegativeDone;
+	private boolean filterRedDone;
+	private boolean filterGreenDone;
+	private boolean filterBlueDone;
+	
+	private boolean imageJoinDone;
+	
+	public Progress(final String imageName) {
+		this.imageName = imageName;
+		this.failed = false;
+		this.message = "";
+		this.filterNegativeDone = false;
+		this.filterRedDone = false;
+		this.filterGreenDone = false;
+		this.filterBlueDone = false;
+		this.imageJoinDone = false;
+	}
+	
+	public String getImageName() {
+		return imageName;
+	}
 
-	//TODO make this class as an indicator for the state of the process.
-	@Autowired
-	private IImageRepository ImageRepository;
-	
-	public Progress() {
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
-	
-	public void UpdateProgress1(String key, Image.UpdateProgress process1) throws FileNotFoundException
-	{
-		Image image = ImageRepository.findByName(key).orElseThrow(() -> new FileNotFoundException(key));
-		image.progress1 = process1;
-		ImageRepository.save(image);
-		
-		this.CalculateCount(image);
+
+	public boolean isFailed() {
+		return failed;
 	}
-	
-	public void UpdateProgress2(String key, Image.UpdateProgress process2) throws FileNotFoundException
-	{
-		Image image = ImageRepository.findByName(key).orElseThrow(() -> new FileNotFoundException(key));
-		image.progress2 = process2;
-		ImageRepository.save(image);
-		this.CalculateCount(image);
+
+	public void setFailed(boolean failed) {
+		this.failed = failed;
 	}
-	
-	public void UpdateProgress3(String key, Image.UpdateProgress process3) throws FileNotFoundException
-	{
-		Image image = ImageRepository.findByName(key).orElseThrow(() -> new FileNotFoundException(key));
-		image.progress3 = process3;
-		ImageRepository.save(image);
-		this.CalculateCount(image);
+
+	public String getMessage() {
+		return message;
 	}
-	
-	public void UpdateProgress4(String key, Image.UpdateProgress process4) throws FileNotFoundException
-	{
-		Image image = ImageRepository.findByName(key).orElseThrow(() -> new FileNotFoundException(key));
-		image.progress4 = process4;
-		ImageRepository.save(image);
-		this.CalculateCount(image);
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
-	
-	private int CalculateCount(Image image)
-	{
-		int count = 0;
-		
-		if(image.progress1 == Image.UpdateProgress.Done)
-			count++;
-		if(image.progress2 == Image.UpdateProgress.Done)
-			count++;
-		if(image.progress3 == Image.UpdateProgress.Done)
-			count++;
-		if(image.progress4 == Image.UpdateProgress.Done)
-			count++;
-		
-		if(count == 4)
-		{
-			image.isDone = true;
-			ImageRepository.save(image);
-		}
-			
-		
-		return count;
+
+	public boolean isFilterNegativeDone() {
+		return filterNegativeDone;
+	}
+
+	public void setFilterNegativeDone(boolean filterNegativeDone) {
+		this.filterNegativeDone = filterNegativeDone;
+	}
+
+	public boolean isFilterRedDone() {
+		return filterRedDone;
+	}
+
+	public void setFilterRedDone(boolean filterRedDone) {
+		this.filterRedDone = filterRedDone;
+	}
+
+	public boolean isFilterGreenDone() {
+		return filterGreenDone;
+	}
+
+	public void setFilterGreenDone(boolean filterGreenDone) {
+		this.filterGreenDone = filterGreenDone;
+	}
+
+	public boolean isFilterBlueDone() {
+		return filterBlueDone;
+	}
+
+	public void setFilterBlueDone(boolean filterBlueDone) {
+		this.filterBlueDone = filterBlueDone;
+	}
+
+	public boolean isImageJoinDone() {
+		return imageJoinDone;
+	}
+
+	public void setImageJoinDone(boolean imageJoinDone) {
+		this.imageJoinDone = imageJoinDone;
 	}
 }

@@ -11,35 +11,38 @@ import org.springframework.stereotype.Component;
 
 import paas.model.api.DataRetrieverService;
 import paas.model.api.DataStorageService;
+import paas.model.filter.ImageFilter;
+import paas.model.filter.blue.BlueFilter;
+import paas.model.filter.green.GreenFilter;
+import paas.model.filter.negative.NegativeImageFilter;
+import paas.model.filter.red.RedFilter;
 import paas.mongodb.Image;
-import paas.mongodb.IImageRepository;
+import paas.mongodb.ImageRepository;
 import paas.mongodb.Progress;
+import paas.mongodb.ProgressRepository;
 
 @Component
 public class DataService implements DataStorageService, DataRetrieverService {
-
-	//TODO DataHolder is a temporal class that should be get rid of. Replace it with MongoRepository
-	//see: https://docs.spring.io/spring-data/mongodb/docs/1.2.0.RELEASE/reference/html/mongo.repositories.html -> 6.3.1 Geo-spatial repository queries
-	
 	@Autowired
-	private IImageRepository imageRepository;
+	private ImageRepository imageRepository;
+	
+	@Autowired ProgressRepository progressRepository;
 	
 	public DataService() {
 	}
 	
 	@Override
-	public Image retrieveImage(String key) throws FileNotFoundException {
+	public Image retrieveImage(final String key) throws FileNotFoundException {
 		return imageRepository.findByName(key).orElseThrow(() -> new FileNotFoundException(key));
 	}
 	
 	@Override
-	public Progress retrieveProgress(String key) throws FileNotFoundException {
-		// TODO Create corresponding repository and retrieve the progress here
-		return null;
+	public Progress retrieveProgress(final String key) throws FileNotFoundException {
+		return progressRepository.findByImageName(key).orElseThrow(() -> new FileNotFoundException(key));
 	}
 
 	@Override
-	public void storeImage(byte[] imageToStore, String key) {
+	public void storeImage(final byte[] imageToStore, final String key) {
 		imageRepository.save(new Image(key, key, imageToStore, key, key, new Date()));
 	    try {
 	    	File convFile = new File(key + ".png");
@@ -51,21 +54,71 @@ public class DataService implements DataStorageService, DataRetrieverService {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
-	public void updateProgressIncrement(String key) {
-		// TODO Auto-generated method stub
+	public void updateProgressFilter(final String progressKey, final ImageFilter filter) {
+		try {
+			Progress progress = retrieveProgress(progressKey);
+			
+			if (filter instanceof NegativeImageFilter) {
+				progress.setFilterNegativeDone(true);
+			} else if (filter instanceof RedFilter) {
+				progress.setFilterRedDone(true);
+			} else if (filter instanceof GreenFilter) {
+				progress.setFilterGreenDone(true);
+			} else if (filter instanceof BlueFilter) {
+				progress.setFilterBlueDone(true);
+			}
+			progressRepository.save(progress);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void updateProgressJoin(final String progressKey) {
+		try {
+			Progress progress = retrieveProgress(progressKey);
+			progress.setFilterNegativeDone(true);
+			progress.setFilterRedDone(true);
+			progress.setFilterGreenDone(true);
+			progress.setFilterBlueDone(true);
+			progress.setImageJoinDone(true);
+			progressRepository.save(progress);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void updateProgressAllParallelTasks(final String progressKey) {
+		try {
+			Progress progress = retrieveProgress(progressKey);
+			progress.setFilterNegativeDone(true);
+			progress.setFilterRedDone(true);
+			progress.setFilterGreenDone(true);
+			progress.setFilterBlueDone(true);
+			progressRepository.save(progress);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void updateProgressAllParallelTasks() {
-		// TODO Auto-generated method stub
+	public void updateProgressFail(final String progressKey, final String message) {
+		try {
+			Progress progress = retrieveProgress(progressKey);
+			progress.setFailed(true);
+			progress.setMessage(message);
+			progressRepository.save(progress);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
 	@Override
-	public void updateProgressFail(String progressKey) {
-		// TODO Auto-generated method stub
-		
+	public void createProgressTracking(String progressKey) {
+		progressRepository.save(new Progress(progressKey));
 	}
 }

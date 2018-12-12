@@ -55,9 +55,12 @@ public class ImageProcessingTask implements Runnable {
 
 	@Override
 	public void run() {
+		dataStorageService.createProgressTracking(imageName);
 		List<FilteringTask> myRunnableList = filterInParallel();
 		try {
+			dataStorageService.updateProgressAllParallelTasks(imageName);
 			performJoinImage(myRunnableList, imageName);
+			dataStorageService.updateProgressJoin(imageName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -72,8 +75,8 @@ public class ImageProcessingTask implements Runnable {
 		while (!isFinished(myRunnableList)) {
 			numberofTries++;
 			if (isIOException(myRunnableList) || (numberofTries == 3)) {
-				System.out.println("System error");
-				dataStorageService.updateProgressFail(imageName);
+				System.out.println("Error while reading the file");
+				dataStorageService.updateProgressFail(imageName, "Error while reading the file");
 				break;
 			}
 

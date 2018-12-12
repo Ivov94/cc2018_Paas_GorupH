@@ -8,7 +8,6 @@ import java.io.IOException;
  */
 public interface ImageFilter {
 	
-	//TODO for all filters: make parallelization by subdividing the image -> performance + fault tolerance + intraprocess parallelization
 	/**
 	 * Create a filtered version of the image.
 	 *

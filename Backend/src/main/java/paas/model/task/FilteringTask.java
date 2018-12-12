@@ -5,6 +5,9 @@ import java.io.IOException;
 import paas.model.api.DataStorageService;
 import paas.model.filter.ImageFilter;
 
+/**
+ * A task to filter an image.
+ */
 public class FilteringTask implements Runnable {
 	private final DataStorageService dataStorageService;
 	private final String processKey;
@@ -44,7 +47,7 @@ public class FilteringTask implements Runnable {
 		try {
 			resultData = filter.createFilteredImage(file);
 			state = States.DONE;
-			dataStorageService.updateProgressIncrement(processKey);
+			dataStorageService.updateProgressFilter(processKey, filter);
 		} catch (IOException e) {
 			state = States.BROKEN;
 			e.printStackTrace();
