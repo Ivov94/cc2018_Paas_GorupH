@@ -44,15 +44,6 @@ public class DataService implements DataStorageService, DataRetrieverService {
 	@Override
 	public void storeImage(final byte[] imageToStore, final String key) {
 		imageRepository.save(new Image(key, key, imageToStore, key, key, new Date()));
-	    try {
-	    	File convFile = new File(key + ".png");
-			convFile.createNewFile();
-			FileOutputStream fos = new FileOutputStream(convFile);
-		    fos.write(imageToStore);
-		    fos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
