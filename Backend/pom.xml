@@ -3,7 +3,7 @@
   <groupId>cc2018GroupH</groupId>
   <artifactId>paas</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -33,7 +33,8 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
-			<dependency>
+		
+		<dependency>
 		    <groupId>org.awaitility</groupId>
 		    <artifactId>awaitility</artifactId>
 		    <scope>provided</scope>
@@ -64,12 +65,49 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
+        
+        <dependency>
+		    <groupId>com.amazonaws.serverless</groupId>
+		    <artifactId>aws-serverless-java-container-spring</artifactId>
+		    <version>1.2</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.amazonaws</groupId>
+		    <artifactId>aws-lambda-java-core</artifactId>
+		    <version>1.2.0</version>
+		</dependency>
     </dependencies>
     
 
     <properties>
         <java.version>1.8</java.version>
 	</properties>
-  
-  
+	
+	<build>
+	    <plugins>
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-shade-plugin</artifactId>
+	            <configuration>
+	                <createDependencyReducedPom>false</createDependencyReducedPom>
+	            </configuration>
+	            <executions>
+	                <execution>
+	                    <phase>package</phase>
+	                    <goals>
+	                        <goal>shade</goal>
+	                    </goals>
+	                    <configuration>
+	                        <artifactSet>
+	                            <excludes>
+	                                <exclude>org.apache.tomcat.embed:*</exclude>
+	                            </excludes>
+	                        </artifactSet>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
+	    </plugins>
+    </build>
 </project>
