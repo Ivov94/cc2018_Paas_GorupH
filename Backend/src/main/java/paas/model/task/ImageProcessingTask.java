@@ -21,7 +21,7 @@ import paas.model.filter.ImageFilter;
  */
 public class ImageProcessingTask implements Runnable {
 	
-	private static Duration MAX_POLL = Duration.FIVE_SECONDS;
+	private static Duration MAX_POLL = Duration.TEN_SECONDS;
 	private static Duration POLL_INTERVAL = new Duration(50, TimeUnit.MILLISECONDS);
 	
 	private final List<ImageFilter> imageFilters;
