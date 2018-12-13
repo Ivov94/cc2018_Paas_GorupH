@@ -67,10 +67,12 @@ namespace Paas.GroupH.Fragments
                     {
                         var processing = await RestService.GetProgressingData(Helper.Values.DefaultProgressPath, filename);
 
-                        if(processing.FilterBlueDone && processing.FilterGreenDone && processing.FilterNegativeDone && processing.FilterRedDone && processing.ImageJoinDone)
+                        this.AddItem(string.Format("try {0}: filename {1} red {2} blue {3} green {4} negative {5} image-join {6}", numberOfAttempts, processing.ImageName, processing.FilterRedDone, processing.FilterBlueDone, processing.FilterGreenDone, processing.FilterNegativeDone, processing.ImageJoinDone));
+                        Log.Info(Helper.Values.LogTag, string.Format("AddItem: try {0}: filename {1} red {2} blue {3} green {4} negative {5} image-join {6}", numberOfAttempts, processing.ImageName, processing.FilterRedDone, processing.FilterBlueDone, processing.FilterGreenDone, processing.FilterNegativeDone, processing.ImageJoinDone));
+
+                        if (processing.FilterBlueDone && processing.FilterGreenDone && processing.FilterNegativeDone && processing.FilterRedDone && processing.ImageJoinDone)
                         {
-                            this.AddItem(string.Format("try {0}: filename {1} red {2} blue {3} green {4} negative {5} image-join {6}", numberOfAttempts, processing.ImageName, processing.FilterRedDone, processing.FilterBlueDone, processing.FilterGreenDone, processing.FilterNegativeDone, processing.ImageJoinDone));
-                            Log.Info(Helper.Values.LogTag, string.Format("AddItem: try {0}: filename {1} red {2} blue {3} green {4} negative {5} image-join {6}", numberOfAttempts, processing.ImageName, processing.FilterRedDone, processing.FilterBlueDone, processing.FilterGreenDone, processing.FilterNegativeDone, processing.ImageJoinDone));
+                            break;
                         }
                         //wait 2 seconds.
                         Thread.Sleep(2000);
@@ -84,14 +86,15 @@ namespace Paas.GroupH.Fragments
                     numberOfAttempts++;
                 } while (numberOfAttempts < maxTryCount);
 
-                var image =await  RestService.GetImageData(Helper.Values.DefaultImagePath, filename);
+                var image = await  RestService.GetImageData(Helper.Values.DefaultImagePath, filename);
                 //image.ContinueWith(aa =>
                 //{
-
-                    byte[] imageArray = Base64.Decode(image.Data, Base64Flags.Default);
+                    
+                    byte[] imageArray = image.Data;
                     Log.Info(Helper.Values.LogTag, "image called with ");
 
-                    Glide.With(this).Load(imageArray).Into(newImage);
+                    Glide.With(this).AsBitmap().Load(image.Data).Into(newImage);
+                    
                 //}, TaskContinuationOptions.AttachedToParent);
             }
             else
