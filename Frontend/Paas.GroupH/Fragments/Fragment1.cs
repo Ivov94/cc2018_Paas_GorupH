@@ -11,6 +11,7 @@ using Java.IO;
 using Paas.GroupH.Model;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AndroidFile = Java.IO.File;
 
 namespace Paas.GroupH.Fragments
@@ -134,7 +135,20 @@ namespace Paas.GroupH.Fragments
 
                 var image = RestService.PostData(input, Files[Index].Substring(indx));
 
-                
+                Toast.MakeText(this.Context, string.Format("Image uploading... please wait.. when image uploaded, you will be redirected to result page.."), ToastLength.Long).Show();
+
+                image.ContinueWith(test =>
+                {
+                    //if(image.IsCompletedSuccessfully)
+                    {
+                        var fr4 = new Intent(this.Activity, typeof(RestActivity));
+                        fr4.PutExtra("fileName", Files[Index].Substring(indx));
+                        fr4.PutExtra("result", test.Result);
+                        StartActivity(fr4);
+                    }
+                    
+                }, TaskContinuationOptions.RunContinuationsAsynchronously);
+
             }
             catch (System.Exception ex)
             {

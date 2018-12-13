@@ -1,5 +1,5 @@
 ﻿{
-  "BaseUrl": "http://www.sanalbakis.com",
-  "Port": 8080,
-  "Path":  "/img"
+  "BaseUrl": "http://springboot-env.kvnpa7pnha.eu-central-1.elasticbeanstalk.com/",
+  "Port": 80,
+  "Path": "/img"
 }

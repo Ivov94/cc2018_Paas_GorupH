@@ -39,7 +39,7 @@ namespace Paas.GroupH.Fragments
             return frag2;
         }
 
-        private string UniqueImgFileName() => $"groupH_{System.DateTime.Now.Ticks.ToString()}.jpg";
+        private string UniqueImgFileName() => $"img_{System.DateTime.Now.Ticks.ToString()}.jpg";
         private string _providerName = $"grouph";
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -93,14 +93,22 @@ namespace Paas.GroupH.Fragments
             {
                 //task started...
                 var image = RestService.PostData(input, file.Name);
+                Toast.MakeText(this.Context, string.Format("Image uploading... please wait.. when image uploaded, you will be redirected to result page.."), ToastLength.Long).Show();
+                image.ContinueWith(test =>
+                 {
+                     
+                     var fr4 = new Intent(this.Activity, typeof(RestActivity));
+                     fr4.PutExtra("fileName", file.Name);
+                     fr4.PutExtra("result", test.Result);
+                     StartActivity(fr4);
+                 }, TaskContinuationOptions.RunContinuationsAsynchronously);
+                
             }
             catch(System.Exception ex)
             {
                 infoPost.Text = string.Format("There was an exception {0}", ex.Message);
             }
             
-            
-
 
         }
 
@@ -117,7 +125,6 @@ namespace Paas.GroupH.Fragments
 
             btnCamera.Visibility = ViewStates.Invisible;
             btnPostImage.Visibility = ViewStates.Visible;
-
         }
         public override void OnDestroyView()
         {

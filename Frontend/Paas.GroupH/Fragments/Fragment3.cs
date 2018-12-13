@@ -61,7 +61,6 @@ namespace Paas.GroupH.Fragments
 
                 hostEdit.Text = settings.BaseUrl;
                 portEdit.Text = settings.Port.ToString();
-
             }
 
             saveButton = view.FindViewById<Button>(Resource.Id.btnSaveSettings);

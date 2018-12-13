@@ -57,6 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fragments\Fragment1.cs" />
+    <Compile Include="Helper\RetryHelper.cs" />
+    <Compile Include="Model\RestImageModel.cs" />
+    <Compile Include="Model\RestProgressModel.cs" />
+    <Compile Include="RestActivity.cs" />
     <Compile Include="Fragments\Fragment3.cs" />
     <Compile Include="Fragments\Fragment2.cs" />
     <Compile Include="Helper\ImageEditor.cs" />
@@ -179,6 +183,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\listItem.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\main2.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -18,6 +18,7 @@ using AndroidFile = Java.IO.File;
 using Android.Support.V4.Content;
 using Paas.GroupH.Model;
 using System.IO;
+using System.Reflection;
 
 namespace Paas.GroupH
 {
@@ -41,7 +42,7 @@ namespace Paas.GroupH
             var permissionManager = new PermissionsManager(this, PERMISSIONS_NEEDED);
             permissionManager.EnablePermissions();
 
-            CreateDir();
+            Helper.Values.CreateDir();
 
 
             var toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
@@ -54,91 +55,64 @@ namespace Paas.GroupH
             }
 
             adapter = new TabsAdapter(this, SupportFragmentManager);
+
             pager = FindViewById<ViewPager>(Resource.Id.pager);
+
             var tabs = FindViewById<TabLayout>(Resource.Id.tabs);
             pager.Adapter = adapter;
+            
             tabs.SetupWithViewPager(pager);
             pager.OffscreenPageLimit = 3;
-            
+
         }
 
-        private void CreateDir()
+        
+
+        
+    }
+    
+    public class TabsAdapter : FragmentStatePagerAdapter
+    {
+        string[] titles;
+
+        public override int Count
         {
-            var directory = new AndroidFile(Android.OS.Environment.ExternalStorageDirectory, "grouph");
-
-            Helper.Values.FolderPath = directory.Path;
-
-            if (!directory.Exists())
-                directory.Mkdirs();
-
-            if(!System.IO.File.Exists(System.IO.Path.Combine(directory.Path, "config.json")))
+            get
             {
-                var settings = new ConfigModel()
-                {
-                    BaseUrl = Helper.Values.DefaultHost,
-                    Port = Helper.Values.DefaultPort,
-                    Path = Helper.Values.FolderPath
-                };
+                return titles.Length;
+            }
+        }
 
-                var save = Newtonsoft.Json.JsonConvert.SerializeObject(settings);
+        public TabsAdapter(Android.Content.Context context, Android.Support.V4.App.FragmentManager fm) : base(fm)
+        {
+            titles = context.Resources.GetTextArray(Resource.Array.sections);
+        }
 
-                try
-                {
-                    using (StreamWriter writer = new StreamWriter(System.IO.Path.Combine(directory.Path, "config.json")))
-                    {
-                        writer.Write(save);
-                    }
-                }
-                catch(Exception ex)
-                {
-                }
+        public override Java.Lang.ICharSequence GetPageTitleFormatted(int position)
+        {
+            return new Java.Lang.String(titles[position]);
+        }
+
+        public override Android.Support.V4.App.Fragment GetItem(int position)
+        {
+            switch (position)
+            {
+                case 0:
+                    return Fragment1.NewInstance();
+                case 1:
+                    return Fragment2.NewInstance();
+                case 2:
+                    return Fragment3.NewInstance();
                 
-                    
-                    
             }
-
+            return null;
         }
 
-        class TabsAdapter : FragmentStatePagerAdapter
+
+
+        public override int GetItemPosition(Java.Lang.Object frag)
         {
-            string[] titles;
-
-            public override int Count
-            {
-                get
-                {
-                    return titles.Length;
-                }
-            }
-
-            public TabsAdapter(Android.Content.Context context, Android.Support.V4.App.FragmentManager fm) : base(fm)
-            {
-                titles = context.Resources.GetTextArray(Resource.Array.sections);
-            }
-
-            public override Java.Lang.ICharSequence GetPageTitleFormatted(int position)
-            {
-                return new Java.Lang.String(titles[position]);
-            }
-
-            public override Android.Support.V4.App.Fragment GetItem(int position)
-            {
-                switch (position)
-                {
-                    case 0:
-                        return Fragment1.NewInstance();
-                    case 1:
-                        return Fragment2.NewInstance();
-                    case 2:
-                        return Fragment3.NewInstance();
-                }
-                return null;
-            }
-
-            public override int GetItemPosition(Java.Lang.Object frag)
-            {
-                return PositionNone;
-            }
+            return PositionNone;
         }
     }
 }

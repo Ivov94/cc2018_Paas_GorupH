@@ -34,13 +34,13 @@ public class FileUploadController {
 
 	@RequestMapping(value = "/img", method = { RequestMethod.POST })
 	public ResponseEntity<String> handleFileUploadMultiThread(
-			@RequestParam("file") MultipartFile file,
-			@RequestParam("name") String name) {
-		ResponseEntity<String> response = new ResponseEntity<>(name, HttpStatus.OK);
+			@RequestParam("file") MultipartFile file) {
+		ResponseEntity<String> response = new ResponseEntity<>(file.getOriginalFilename(), HttpStatus.OK);
+		
 		ImageProcessingTask imageProcessingTask;
 		try {
 			imageProcessingTask = ImageProcessingTask
-					.createImageProcessingTask(imageFilters, dataStorageService, joinProcessor, file.getBytes(), name);
+					.createImageProcessingTask(imageFilters, dataStorageService, joinProcessor, file.getBytes(), file.getOriginalFilename());
 			new Thread(imageProcessingTask).start();
 		} catch (IOException e) {
 			response = new ResponseEntity<>("Could not read file", HttpStatus.BAD_REQUEST);
